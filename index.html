@@ -10,15 +10,14 @@
   body,h1,p {font-size: 10px;margin: 16;background: #000001;color: #555555;font-family: 'Source Sans Pro', sans-serif;}
   h1 {font-size: 20px;}
   #bigButton {
-    background-color: green; border: none; color: black; padding: 1px; text-align: center;
+    background-color: blue; border: none; color: black; padding: 1px; text-align: center;
     text-decoration: none; font-size: 4px; margin: 4px 10px; height: 16px; width: 16px;
     border-radius: 50%; outline:none; font-family: 'Open Sans', sans-serif;
   }
   </style>
 </head>
 <body>
-  <h1>Arduino MKR 1010 and IMU shield</h1>
-  <p>First upload sketch to board with <a href="https://create.arduino.cc/editor/dpajak/e7af8e95-0aff-4ce1-b2f7-4e7b446c2577/preview" target=”_blank”>Arduino Create</a></p>
+  <h1>SONOR</h1>
 
   <div style="width:95%;height:100%;border-color: #333333;border-style: solid;border-w.dth: 0.5;">
     <div style="width:100%;height:30px;border-color: #333333;border-style: solid;border-width: 0.5;border-left:none;border-top:none;margin-top:5px;" id="status">
@@ -193,36 +192,7 @@ function updateData(x,y,z) {
   clock=0;};
   clock++;
 
-  /*
-  if (clock == 2) {
-    var data = [{z: zx, type: 'heatmap', "colorscale": "Blues", showscale:false}];
-  Plotly.newPlot('heatx', data,{
-    barmode: 'stack',
-    plot_bgcolor: '#000001',
-    paper_bgcolor: '#000001',
-    margin: {l:30,r:30,b:25,t:25},
-    yaxis: {'showticklabels':false,'range': 100, 'autorange': "false"}});
-  }
- if (clock == 4) {
-    var data = [{z: zy, type: 'heatmap', 'reversescale':true,"colorscale": "Reds", showscale:false}];
-  Plotly.newPlot('heaty', data,{
-    barmode: 'stack',
-    plot_bgcolor: '#000001',
-    paper_bgcolor: '#000001',
-    margin: {l:30,r:30,b:25,t:25},
-    yaxis: {'showticklabels':false,'range': 100, 'autorange': "false"}});
-  }
-  if (clock == 6){
-    var data = [{z: zz, type: 'heatmap', "colorscale": "Greens", showscale:false}];
-  Plotly.newPlot('heatz', data,{
-    barmode: 'stack',
-    plot_bgcolor: '#000001',
-    paper_bgcolor: '#000001',
-    margin: {l:30,r:30,b:25,t:25},
-    yaxis: {'showticklabels':false,'range': 100, 'autorange': "false"}});
-    clock=0;
-};
-*/
+  
   //status("<font color='#00cc00'>{x:"+x+",y:"+y+","+"z:"+z+"}");
   graphData.x.push(x);graphData.y.push(y);graphData.z.push(z);
 
