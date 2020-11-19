@@ -4,7 +4,7 @@
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/97/three.min.js"></script>
   <style>
-  body,h1,p {font-size: 10px;margin: 16;background: #000001;color: #555555;font-family: 'Source Sans Pro', sans-serif;}
+  body,h1,p {font-size: 10px;margin: 16;background: #EEEEEE;color: #555555;font-family: 'Source Sans Pro', sans-serif;}
   h1 {font-size: 20px;}
   #bigButton {
     background-color: green; border: none; color: black; padding: 1px; text-align: center;
@@ -16,15 +16,15 @@
 <body>
   <h1>SONOR</h1>
 
-  <div style="width:95%;height:100%;border-color: #333333;border-style: solid;border-w.dth: 0.5;">
-    <div style="width:100%;height:30px;border-color: #333333;border-style: solid;border-width: 0.5;border-left:none;border-top:none;margin-top:5px;" id="status">
+  <div style="width:95%;height:100%;border-color: #7CE3F1;border-style: solid;border-w.dth: 0.5;">
+    <div style="width:100%;height:30px;border-color: #7CE3F1;border-style: solid;border-width: 0.5;border-left:none;border-top:none;margin-top:5px;" id="status">
       <button id="bigButton" ></button><div style="display: inline-block;margin-left: 10px" id="infoBar">Click to connect via Bluetooth LE</div>
     </div stye="display: table;">
     <div style="width:100%;height:200px;margin-top:20px;margin-bottom:5px;  margin: 0 auto;">
       <div id="3d" style="float: left;height:200px;width: 20% "></div>
       <div id="graph" style="float: left;height:200px;width: 75%"></div>
     </div>
-    <div style="width:100%;height:200px;margin-top:20px;margin-bottom:5px;  margin: 0 auto;border-color: #333333;border-style: solid;border-width: 0.5;border-left:none;border-right:none;">
+    <div style="width:100%;height:200px;margin-top:20px;margin-bottom:5px;  margin: 0 auto;border-color: #7CE3F1;border-style: solid;border-width: 0.5;border-left:none;border-right:none;">
       <div id="bottom" style="float: left;height:200px;width: 100% "></div>
 
     </div>
@@ -39,9 +39,9 @@ gathering three characteristics from a 3-axis accelerometer
 created 6 Aug 2018
 by Tom Igoe
 
-further use from 8bitkick
+further application from 8bitkick
 
-used for personal testing, pls no ban,
+used for personal testing
 */
 
 var frameBufferSize = 256;
@@ -96,31 +96,42 @@ function status(stat){
 
 
 // connect to the Bluetooth peripheral:
-function connect() {
-	navigator.bluetooth.requestDevice({
-	optionalServices: [myService],
-	acceptAllDevices: true
-	})
-  }).then(function (device) {
-    myDevice = device;
-    status('Connecting to GATT server...'); return device.gatt.connect();
-  }).then(function (server) {
-    status('Getting service...'); return server.getPrimaryService(imuService);
-  }).then(function (service) {
-    status('Getting characteristics...'); return service.getCharacteristics();
-  }).then(function (characteristics) {
-    status('Subscribing...');
-    for (c in characteristics) {
-      characteristics[c].addEventListener('characteristicvaluechanged', handleData);
-      characteristics[c].startNotifications();
-    }
-    infoBar.innerHTML = "Connected"; bigButton.style.backgroundColor = "#00ffff";
-  })
-  .catch(function (error) {
-    // catch any errors:
-    console.error('Connection failed!', error);
-  });
-}
+function connect(){
+	  navigator.bluetooth.requestDevice({
+		// filters: [myFilters]       // you can't use filters and acceptAllDevices together
+		optionalServices: [myService],
+		acceptAllDevices: true
+	  })
+	  .then(function(device) {
+		// save the device returned so you can disconnect later:
+		myDevice = device;
+		console.log(device);
+		// connect to the device once you find it:
+		return device.gatt.connect();
+			console.log("Here1");
+	  })
+	  .then(function(server) {
+		// get the primary service:
+		return server.getPrimaryService(myService);
+			console.log("Here2");
+	  })
+	  .then(function(service) {
+		// get the  characteristic:
+		return service.getCharacteristics(a);
+			console.log("Here3");
+	  })
+	  .then(function(characteristics) {
+		// subscribe to the characteristic:
+		for (c in characteristics) {
+		  characteristics[c].startNotifications()
+		  .then(subscribeToChanges);
+		}
+	  })
+	  .catch(function(error) {
+		// catch any errors:
+		console.error('Connection failed!', error);
+	  });
+	}
 
 // handle incoming data:
 function handleData(event) {
@@ -205,8 +216,8 @@ function initGraph(){
 
   Plotly.plot('bottom', traceData,
   {
-    plot_bgcolor: '#000001',
-    paper_bgcolor: '#000001',
+    plot_bgcolor: '#EEEEEE',
+    paper_bgcolor: '#EEEEEE',
     margin: {l:30,r:30,b:25,t:25},
     color: '#000001',
     'xaxis': {'range': [frameBufferSize], 'autorange': "true"}
